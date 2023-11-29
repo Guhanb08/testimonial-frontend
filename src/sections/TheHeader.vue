@@ -7,7 +7,9 @@ import { IconChevronDown, IconAnalyze, IconMenu2, IconShoppingBag , IconUsers, I
   <header class="max-container py-5">
     <div class="flex justify-between items-center px-3">
       <div>
+        <router-link to="/">
         <img class="h-10" src="@/assets/images/logos/logo-dark.svg" alt="header-logo" />
+      </router-link>
       </div>
       <nav class="hidden lg:block">
         <ul class="flex gap-2 items-center">
@@ -125,8 +127,9 @@ import { IconChevronDown, IconAnalyze, IconMenu2, IconShoppingBag , IconUsers, I
         </ul>
       </nav>
       <div class="hidden lg:block">
-        <a href="#" class="px-2 py-4">Sign in</a>
-        <a href="#" class="ms-3 px-5 py-3 bg-violet-600 text-white">Sign up</a>
+        <router-link to="/signin"  class="px-2 py-4">Sign in</router-link>
+
+        <router-link to="/signup"  class="ms-3 px-5 py-3 bg-violet-600 text-white">Sign up</router-link>
       </div>
       <div class="lg:hidden">
         <IconMenu2 color="black" :size="35" stroke-width="1" />
