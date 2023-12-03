@@ -24,7 +24,7 @@ const router = createRouter({
       name: 'signup',
       component: RegisterPage,
       meta: { hideFooter: true }, 
-    },
+    }
   ]
 })
 
