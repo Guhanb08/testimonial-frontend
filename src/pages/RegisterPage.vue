@@ -7,7 +7,7 @@ const router = useRouter();
 
 const authStore = useAuthStore();
 import toastService from "@/plugins/toast";
-import { ZodError } from "zod";
+import { ZodError, set } from "zod";
 import { registerSchema } from "@/schemas/authSchema";
 
 const onSubmit = async (values: any) => {
@@ -17,7 +17,9 @@ const onSubmit = async (values: any) => {
     let response = await authStore.registerUser(validatedValues);
     if (response) {
       toastService.default(`🎉 ${response.message}`);
-      router.push({ name: "signin" });
+      setTimeout(() => {
+        router.push({ name: "signin" });
+      }, 3000);
     }
   } catch (error: any) {
     if (error instanceof ZodError) {
@@ -54,7 +56,6 @@ const onSubmit = async (values: any) => {
                 <Field
                   id="user_name"
                   name="user_name"
-                  value="guhan"
                   type="text"
                   placeholder="Your first name"
                   autocomplete="user_name"
@@ -72,7 +73,6 @@ const onSubmit = async (values: any) => {
               <div class="mt-2">
                 <Field
                   id="email"
-                  value="guhanb@gmail.com"
                   name="email"
                   type="email"
                   placeholder="Your Email"
@@ -93,7 +93,6 @@ const onSubmit = async (values: any) => {
               <div class="mt-2">
                 <Field
                   id="password"
-                  value="12345678"
                   name="password"
                   type="password"
                   placeholder="Password"

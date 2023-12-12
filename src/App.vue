@@ -16,7 +16,7 @@ console.log("hideFooter", hideFooter.value); */
 <template>
   <TheHeader></TheHeader>
   <RouterView />
-  <!-- <TheFooter ></TheFooter> -->
+  <TheFooter ></TheFooter>
 </template>
 
 <style scoped></style>

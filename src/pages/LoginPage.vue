@@ -17,7 +17,7 @@ const onSubmit = async (values: any) => {
     let response = await authStore.loginUser(validatedValues);
     if (response) {
       localStorage.setItem("access_token", response.access_token);
-      router.push("/");
+      router.push("/dashboard");
     }
   } catch (error: any) {
     if (error instanceof ZodError) {
@@ -53,7 +53,6 @@ const onSubmit = async (values: any) => {
               <div class="mt-2">
                 <Field
                   id="email"
-                  value="guhanb@gmail.com"
                   name="email"
                   type="email"
                   placeholder="Your Email"
@@ -74,7 +73,6 @@ const onSubmit = async (values: any) => {
               <div class="mt-2">
                 <Field
                   id="password"
-                  value="12345678"
                   name="password"
                   type="password"
                   placeholder="Password"
