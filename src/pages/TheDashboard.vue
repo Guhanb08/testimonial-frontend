@@ -64,10 +64,12 @@ toastService.default("👋 Welcome Back");
       <div class="my-20">
         <div class="mb-6 flex justify-between">
           <h3 class="text-3xl font-semibold">Spaces</h3>
-          <button class="flex items-center bg-violet-500 hover:bg-violet-600 text-white px-4 py-2">
+          <router-link to="/space">
+            <button class="flex items-center bg-violet-500 hover:bg-violet-600 text-white px-4 py-2">
             <IconPlus color="white" :size="20" stroke-width="2" />
             <span class="ms-1">Create a new space</span>
           </button>
+          </router-link>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           <div class="flex items-center border rounded-xl shadow-sm pe-5">

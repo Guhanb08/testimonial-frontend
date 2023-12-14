@@ -3,6 +3,9 @@ import TheHome from '@/pages/TheHome.vue'
 import LoginPage from '@/pages/LoginPage.vue'
 import RegisterPage from '@/pages/RegisterPage.vue'
 import DashboardPage from '@/pages/TheDashboard.vue'
+import SpacePage from '@/pages/TheSpace.vue'
+
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +31,12 @@ const router = createRouter({
       name: 'dashboard',
       component: DashboardPage,
     }
-
+    ,
+    {
+      path: '/space',
+      name: 'space',
+      component: SpacePage,
+    }
   ]
 })
 
