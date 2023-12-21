@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import TrustedCustomer from '@/sections/TrustedCustomer.vue'
-import { IconArrowRight } from '@tabler/icons-vue'
 </script>
 
 <template>

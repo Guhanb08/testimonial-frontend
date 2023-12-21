@@ -8,3 +8,9 @@ export interface registerInput {
   email : string;
   password : string;
 }
+
+export interface spaceInput {
+  user_name : string
+  email : string;
+  password : string;
+}

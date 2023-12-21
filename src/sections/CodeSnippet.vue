@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IconCopy } from '@tabler/icons-vue'
 </script>
 
 <template>

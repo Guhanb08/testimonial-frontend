@@ -3,13 +3,12 @@ import axios, { type AxiosInstance } from "axios";
 const apiURL = import.meta.env.VITE_BASE_API;
 import toastService from "@/plugins/toast";
 
-console.log(apiURL);
 const axiosIns: AxiosInstance = axios.create({
   baseURL: apiURL,
   headers: {
     accept: "application/json",
     common: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
+      Authorization: "Bearer " + localStorage.getItem("access_token"),
     },
   },
 });

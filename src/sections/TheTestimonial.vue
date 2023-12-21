@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IconStarFilled } from '@tabler/icons-vue'
 </script>
 
 <template>

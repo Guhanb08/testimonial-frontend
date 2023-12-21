@@ -2,13 +2,7 @@
 import { ref, onMounted } from "vue";
 import TheHero from "@/sections/TheHero.vue";
 import toastService from "@/plugins/toast";
-import {
-  IconVideo,
-  IconMoodSmile,
-  IconBriefcase,
-  IconSettings,
-  IconPlus,
-} from "@tabler/icons-vue";
+
 
 onMounted(() => {
 toastService.default("👋 Welcome Back");
