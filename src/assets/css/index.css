@@ -171,5 +171,13 @@
   .info-text {
     @apply font-montserrat text-slate-gray text-lg leading-7;
   }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+    .scrollbar-hide {
+        -ms-overflow-style: none; 
+        scrollbar-width: none;  
+    }
 }
 

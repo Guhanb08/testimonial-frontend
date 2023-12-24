@@ -8,7 +8,6 @@ export const useSpaceStore = defineStore("spaceStore", () => {
 
   const createSpace = async (spacePayload : any) => {
     try {
-      spacePayload.user_id = 1;
       const response = await $axios.post(
         "/spaces/master",
         spacePayload
@@ -24,7 +23,31 @@ export const useSpaceStore = defineStore("spaceStore", () => {
       }
     }
   };
+
+  const fetchSpaceByUserId = async (id:number) => {
+    try {
+      const response = await $axios.get(
+        `/spaces/master/fetch/user`,
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(error)
+    }
+  };
+
+  const fetchSpaceBySlug = async (slug:string) => {
+    try {
+      const response = await $axios.get(
+        `/spaces/master/slug/${slug}`,
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(error)
+    }
+  };
   return {
     createSpace,
+    fetchSpaceByUserId,
+    fetchSpaceBySlug
   };
 });

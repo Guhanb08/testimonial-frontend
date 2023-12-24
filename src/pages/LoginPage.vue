@@ -16,8 +16,9 @@ const onSubmit = async (values: any) => {
     console.log(validatedValues);
     let response = await authStore.loginUser(validatedValues);
     if (response) {
-      localStorage.setItem("access_token", response.access_token);
-      router.push("/dashboard");
+      localStorage.setItem("userData", JSON.stringify(response.userData));
+      localStorage.setItem("accessToken", JSON.stringify(response.accessToken));
+      router.push("/dashboard");  
     }
   } catch (error: any) {
     if (error instanceof ZodError) {

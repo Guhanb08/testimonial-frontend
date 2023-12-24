@@ -59,7 +59,20 @@ import {
 } from "@/components/ui/tooltip";
 
 import { Switch } from "@/components/ui/switch";
-
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 import {
   IconInfoCircle,
   IconEdit,
@@ -84,8 +97,31 @@ import {
   IconAdjustmentsAlt,
   IconAdjustmentsFilled,
   IconAdjustments,
-  IconCirclePlus
+  IconCirclePlus,
+  IconLogout,
+  IconDashboard,
+  IconLayoutDashboard,
+  IconArrowDown
 } from "@tabler/icons-vue";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from '@/components/ui/dialog'
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+
+import StarRating from 'vue-star-rating'
 
 const app = createApp(App);
 
@@ -139,6 +175,30 @@ app.component("ShadTooltipContent", TooltipContent);
 app.component("ShadTooltipProvider", TooltipProvider);
 app.component("ShadTooltipTrigger", TooltipTrigger);
 app.component("ShadSwitch", Switch);
+app.component("ShadDropdownMenu", DropdownMenu);
+app.component("ShadDropdownMenuContent", DropdownMenuContent);
+app.component("ShadDropdownMenuItem", DropdownMenuItem);
+app.component("ShadDropdownMenuLabel", DropdownMenuLabel);
+app.component("ShadDropdownMenuSeparator", DropdownMenuSeparator);
+app.component("ShadDropdownMenuTrigger", DropdownMenuTrigger);
+app.component("ShadDropdownMenuGroup", DropdownMenuGroup);
+app.component("ShadDropdownMenuShortcut", DropdownMenuShortcut);
+app.component("ShadDropdownMenuSub", DropdownMenuSub);
+app.component("ShadDropdownMenuSubContent", DropdownMenuSubContent);
+app.component("ShadDropdownMenuSubTrigger", DropdownMenuSubTrigger);
+app.component("ShadDropdownMenuPortal", DropdownMenuPortal);
+app.component("ShadDialog", Dialog);
+app.component("ShadDialogContent", DialogContent);
+app.component("ShadDialogDescription", DialogDescription);
+app.component("ShadDialogFooter", DialogFooter);
+app.component("ShadDialogHeader", DialogHeader);
+app.component("ShadDialogTitle", DialogTitle);
+app.component("ShadDialogTrigger", DialogTrigger);
+app.component("ShadDialogClose", DialogClose);
+app.component("ShadPopover", Popover);
+app.component("ShadPopoverContent", PopoverContent);
+app.component("ShadPopoverTrigger", PopoverTrigger);
+
 
 // icons
 
@@ -166,9 +226,19 @@ app.component("IconAdjustmentsAlt", IconAdjustmentsAlt);
 app.component("IconAdjustmentsFilled", IconAdjustmentsFilled);
 app.component("IconAdjustments", IconAdjustments);
 app.component("IconCirclePlus", IconCirclePlus);
+app.component("IconLogout", IconLogout);
+app.component("IconLayoutDashboard",IconLayoutDashboard);
+app.component("IconDashboard", IconDashboard);
+app.component("IconArrowDown", IconArrowDown);
+
+
+
+
 
 app.component("DragContainer", Container);
 app.component("Draggable", Draggable);
+app.component("StarRating", StarRating);
+
 
 // app.use(VueHighlightJS)
 app.mount("#app");

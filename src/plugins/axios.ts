@@ -8,7 +8,7 @@ const axiosIns: AxiosInstance = axios.create({
   headers: {
     accept: "application/json",
     common: {
-      Authorization: "Bearer " + localStorage.getItem("access_token"),
+      Authorization: "Bearer " + localStorage.getItem("accessToken"),
     },
   },
 });
