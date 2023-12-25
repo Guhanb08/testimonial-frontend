@@ -7,6 +7,9 @@ import type { space } from "@/models/types";
 import { useSpaceStore } from "@/stores/spaceStore";
 import { useReviewStore } from "@/stores/reviewStore";
 
+import MediaDevices from "@/sections/MediaDevices.vue";
+
+
 import { useForm, Field, Form, ErrorMessage, FieldArray } from "vee-validate";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
@@ -98,28 +101,28 @@ const fetchSpaces = async () => {
       spaceValue.value = response.data;
       let spaceCollection = response.data.space_setting[0]?.space_collections;
       let reviewCollections = [
-      {
-        label: "Name",
-        field_type: "Text",
-        text_value: "",
-        checkbox_value: false,
-        is_required: true,
-      },
-      {
-        label: "Email",
-        field_type: "Text",
-        text_value: "",
-        checkbox_value: false,
-        is_required: true,
-      },
-      ...spaceCollection.map((collection: any) => ({
-        label: collection.label,
-        field_type: collection.field_type,
-        text_value: "",
-        checkbox_value: false,
-        is_required: collection.is_required,
-      })),
-    ];
+        {
+          label: "Name",
+          field_type: "Text",
+          text_value: "",
+          checkbox_value: false,
+          is_required: true,
+        },
+        {
+          label: "Email",
+          field_type: "Text",
+          text_value: "",
+          checkbox_value: false,
+          is_required: true,
+        },
+        ...spaceCollection.map((collection: any) => ({
+          label: collection.label,
+          field_type: collection.field_type,
+          text_value: "",
+          checkbox_value: false,
+          is_required: collection.is_required,
+        })),
+      ];
       setValues({
         space_name: spaceValue?.value?.space_name,
         space_id: spaceValue?.value?.id,
@@ -262,11 +265,103 @@ const removeImage = (type: string) => {
             </ShadDialogTrigger>
             <ShadDialogContent>
               <ShadDialogHeader>
-                <ShadDialogTitle>Testimonial</ShadDialogTitle>
-                <ShadDialogDescription>
-                  Make changes to your profile here. Click save when you're
-                  done.
+                <ShadDialogTitle class="text-center pt-5 pb-2 font-medium">
+                  <div>
+                    <ShadButton
+                      type="button"
+                      class="h-10 w-10 p-0 cursor-default rounded-full bg-violet-700"
+                    >
+                      <IconVideo :size="20" />
+                    </ShadButton>
+                    <p class="mt-5">Check Your Camera and Microphone</p>
+                  </div>
+                </ShadDialogTitle>
+                <ShadDialogDescription class="text-center"
+                  >You have up to 60 seconds to record your video. Don’t worry:
+                  You can review your video before submitting it, and you can
+                  re-record if needed.
                 </ShadDialogDescription>
+                <div class="py-5">
+                  <div>
+                    <MediaDevices></MediaDevices>
+                  </div>
+                  <div class="mt-5">
+                    <ShadFormField
+                      v-slot="{ componentField }"
+                      name="space_setting.collection_type"
+                    >
+                      <ShadFormItem>
+                        <ShadFormLabel class="form-label"
+                          >Camera</ShadFormLabel
+                        >
+                        <ShadSelect v-bind="componentField">
+                          <ShadFormControl class="select">
+                            <ShadSelectTrigger>
+                              <ShadSelectValue
+                                class="text-gray-600"
+                                placeholder="Select collection type"
+                              />
+                            </ShadSelectTrigger>
+                          </ShadFormControl>
+                          <ShadSelectContent>
+                            <ShadSelectGroup>
+                              <ShadSelectItem
+                                class="text-gray-500"
+                                v-for="collection in ['Face Time', 'Web Cam']"
+                                :value="collection"
+                              >
+                                {{ collection }}
+                              </ShadSelectItem>
+                            </ShadSelectGroup>
+                          </ShadSelectContent>
+                        </ShadSelect>
+                      </ShadFormItem>
+                    </ShadFormField>
+                  </div>
+                  <div class="mt-5">
+                    <ShadFormField
+                      v-slot="{ componentField }"
+                      name="space_setting.collection_type"
+                    >
+                      <ShadFormItem>
+                        <ShadFormLabel class="form-label"
+                          >Microphone </ShadFormLabel
+                        >
+                        <ShadSelect v-bind="componentField">
+                          <ShadFormControl class="select">
+                            <ShadSelectTrigger>
+                              <ShadSelectValue
+                                class="text-gray-600"
+                                placeholder="Select collection type"
+                              />
+                            </ShadSelectTrigger>
+                          </ShadFormControl>
+                          <ShadSelectContent>
+                            <ShadSelectGroup>
+                              <ShadSelectItem
+                                class="text-gray-500"
+                                v-for="collection in ['Default', 'MacBook Pro Microphone (Built-in']"
+                                :value="collection"
+                              >
+                                {{ collection }}
+                              </ShadSelectItem>
+                            </ShadSelectGroup>
+                          </ShadSelectContent>
+                        </ShadSelect>
+                      </ShadFormItem>
+                    </ShadFormField>
+                  </div>
+                </div>
+                <div>
+                  <ShadButton type="button" class="w-full">
+                    Record My video
+                  </ShadButton>
+                  <div class="mt-5">
+                    <div class="">
+                      <ShadInput id="picture" type="file" />
+                    </div>
+                  </div>
+                </div>
               </ShadDialogHeader>
             </ShadDialogContent>
           </ShadDialog>
@@ -391,7 +486,7 @@ const removeImage = (type: string) => {
                       </div>
                     </div>
                   </div>
-<!-- 
+                  <!-- 
                    <div>
                     {{ reviewValue.review_info?.review_collections }}
                   </div> -->
@@ -438,7 +533,11 @@ const removeImage = (type: string) => {
                                     class="input"
                                     autocomplete="off"
                                     type="text"
-                                    :required="reviewValue?.review_info?.review_collections?.[fieldid].is_required"
+                                    :required="
+                                      reviewValue?.review_info
+                                        ?.review_collections?.[fieldid]
+                                        .is_required
+                                    "
                                     v-bind="componentField"
                                   />
                                 </ShadFormControl>
