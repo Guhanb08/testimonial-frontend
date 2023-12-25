@@ -103,7 +103,11 @@ import {
   IconLayoutDashboard,
   IconArrowDown
 } from "@tabler/icons-vue";
-
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '@/components/ui/collapsible'
 import {
   Dialog,
   DialogContent,
@@ -198,6 +202,11 @@ app.component("ShadDialogClose", DialogClose);
 app.component("ShadPopover", Popover);
 app.component("ShadPopoverContent", PopoverContent);
 app.component("ShadPopoverTrigger", PopoverTrigger);
+
+app.component("ShadCollapsible", Collapsible);
+app.component("ShadCollapsibleContent", CollapsibleContent);
+app.component("ShadCollapsibleTrigger", CollapsibleTrigger);
+
 
 
 // icons

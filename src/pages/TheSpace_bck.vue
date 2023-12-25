@@ -488,11 +488,263 @@ const handleImageChange = (event: Event) => {
                   <span class="form-label text-sm"
                     >Collect extra information</span
                   >
+                  {{ spaceValue?.space_setting?.space_collections }}
+
                 </div>
 
                 <div>
-                  <ShadCard>
-                    <ShadCardContent class="pt-6">
+                  <ShadCollapsible v-model:open="isOpen" class="space-y-5">
+                    <div class="flex items-center justify-between space-x-4">
+                      <ShadCollapsibleTrigger as-child>
+                        <ShadButton
+                          variant="ghost"
+                          class="bg-white hover:bg-white text-gray-600 border font-normal flex items-center"
+                        >
+                          Title, Social Link, etc.
+                          <IconChevronDown class="ms-1" :size="18" />
+                          <span class="sr-only">Toggle</span>
+                        </ShadButton>
+                      </ShadCollapsibleTrigger>
+                    </div>
+
+                    <ShadCollapsibleContent class="space-y-2">
+                      <ShadCard>
+                        <ShadCardContent class="pt-6">
+                            <div>
+                              <div>
+                                <FieldArray
+                                  name="space_setting.space_collections"
+                                  v-slot="{ fields, push, remove }"
+                                >
+                                  <div
+                                    v-for="(field, fieldid) in fields"
+                                    :key="fieldid"
+                                  >
+                                    <div
+                                      class="flex justify-between"
+                                      v-if="fieldid < 3"
+                                    >
+                                      <div class="mb-6">
+                                        <ShadFormField
+                                          v-slot="{ value, handleChange }"
+                                          :id="`collectionEnabled_${fieldid}`"
+                                          :name="`space_setting.space_collections[${fieldid}].is_enabled`"
+                                        >
+                                          <ShadFormItem
+                                            class="flex justify-center items-center"
+                                          >
+                                            <ShadFormControl>
+                                              <ShadSwitch
+                                                :checked="value"
+                                                @update:checked="handleChange"
+                                              />
+                                            </ShadFormControl>
+                                            <ShadFormLabel
+                                              class="form-label ms-2 mt0"
+                                            >
+                                              {{
+                                                spaceValue?.space_setting
+                                                  ?.space_collections?.[fieldid]
+                                                  .label
+                                              }}
+                                            </ShadFormLabel>
+                                          </ShadFormItem>
+                                        </ShadFormField>
+                                      </div>
+                                      <div class="mt-1 ms-4">
+                                        <ShadFormField
+                                          v-slot="{ value, handleChange }"
+                                          :id="`collectionRequired_${fieldid}`"
+                                          :name="`space_setting.space_collections[${fieldid}].is_required`"
+                                        >
+                                          <ShadFormItem
+                                            class="flex items-center"
+                                          >
+                                            <ShadFormLabel
+                                              class="text-sm cursor-pointer text-gray-700 ms-2 mt0 font-normal"
+                                              >Required?
+                                            </ShadFormLabel>
+
+                                            <ShadFormControl class="ms-2 mt0">
+                                              <ShadCheckbox
+                                                :checked="value"
+                                                @update:checked="handleChange"
+                                              />
+                                            </ShadFormControl>
+                                          </ShadFormItem>
+                                        </ShadFormField>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </FieldArray>
+                              </div>
+                              <h5 class="text-sm font-medium text-gray-700">
+                                Create your own fields 
+                              </h5>
+                              <FieldArray
+                                name="space_setting.space_collections"
+                                v-slot="{ fields, push, remove }"
+                              >
+                                <div class="mt-3">
+                                  <div
+                                    v-for="(field, fieldid) in fields"
+                                    :key="fieldid"
+                                  >
+                                    <div
+                                      v-if="fieldid > 2"
+                                      class="flex justify-between items-center mb-4 "
+                                    >
+                                      <div class="flex w-full">
+                                        <div class="relative w-full">
+                                          <ShadFormField
+                                            v-slot="{ componentField }"
+                                            :id="`collectionlabels_${fieldid}`"
+                                            :name="`space_setting.space_collections[${fieldid}].label`"
+                                          >
+                                            <ShadFormItem v-auto-animate>
+                                              <ShadFormControl>
+                                                <ShadInput
+                                                  class="input rounded-e-none"
+                                                  autocomplete="off"
+                                                  type="text"
+                                                  v-bind="componentField"
+                                                />
+                                              </ShadFormControl>
+                                            </ShadFormItem>
+                                          </ShadFormField>
+                                          <p
+                                            class="absolute bg-white right-2 top-3 text-xs text-gray-500"
+                                          >
+                                            0/50
+                                          </p>
+                                        </div>
+                                        <div >
+                                          <ShadFormField
+                                            v-slot="{ componentField }"
+                                            :id="`field_type_${fieldid}`"
+                                            :name="`space_setting.space_collections[${fieldid}].field_type`"
+                                          >
+                                            <ShadFormItem>
+                                              <ShadSelect
+                                                v-bind="componentField"
+                                              >
+                                                <ShadFormControl
+                                                  class="select rounded-s-none rounded-e-none border-s-0 border-e-0"
+                                                >
+                                                  <ShadSelectTrigger>
+                                                    <ShadSelectValue
+                                                      class="text-gray-600"
+                                                      placeholder="Text"
+                                                    />
+                                                  </ShadSelectTrigger>
+                                                </ShadFormControl>
+                                                <ShadSelectContent>
+                                                  <ShadSelectGroup>
+                                                    <ShadSelectItem
+                                                      class="text-gray-500"
+                                                      value="Text"
+                                                    >
+                                                      Text
+                                                    </ShadSelectItem>
+                                                    <ShadSelectItem
+                                                      class="text-gray-500"
+                                                      value="Checkbox"
+                                                      >Checkbox
+                                                    </ShadSelectItem>
+                                                  </ShadSelectGroup>
+                                                </ShadSelectContent>
+                                              </ShadSelect>
+                                            </ShadFormItem>
+                                          </ShadFormField>
+                                        </div>
+                                        <div
+                                          class="flex items-center space-x-2"
+                                        >
+                                          <ShadButton
+                                            type="button"
+                                            class="border border-gray-200 rounded-s-none bg-gray-50 hover:bg-gray-100 text-gray-600"
+                                          >
+                                            <ShadFormField
+                                              v-slot="{ value, handleChange }"
+                                              :id="`collectionreq_${fieldid}`"
+                                              :name="`space_setting.space_collections[${fieldid}].is_required`"
+                                            >
+                                              <ShadFormItem
+                                                class="flex items-center"
+                                              >
+                                                <ShadFormControl class=" ">
+                                                  <ShadCheckbox
+                                                    :checked="value"
+                                                    @update:checked="
+                                                      handleChange
+                                                    "
+                                                  />
+                                                </ShadFormControl>
+                                                <ShadFormLabel
+                                                  class="text-sm text-gray-700 ms-2 mt0 font-normal cursor-pointer"
+                                                  >Required?
+                                                </ShadFormLabel>
+                                              </ShadFormItem>
+                                            </ShadFormField>
+                                          </ShadButton>
+                                        </div>
+                                      </div>
+                                      <div class="ms-4 cursor-pointer">
+                                        <IconTrash
+                                          @click="remove(fieldid)"
+                                          class="text-gray-500"
+                                          :size="20"
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center cursor-pointer"
+                                  v-if="fields.length < 8"
+                                  @click="
+                                    push({
+                                      label: '',
+                                      field_type: 'Text',
+                                      is_required: false,
+                                      is_enable: true,
+                                    })
+                                  "
+                                >
+                                  <IconCirclePlus
+                                    class="text-gray-700"
+                                    :size="18"
+                                  />
+                                  <h5
+                                    class="text-sm font-medium ms-1 text-gray-700"
+                                  >
+                                    Add a new field (up to 5)
+                                  </h5>
+                                </div>
+                              </FieldArray>
+                            </div>
+                        
+                        </ShadCardContent>
+                      </ShadCard>
+                    </ShadCollapsibleContent>
+                  </ShadCollapsible>
+                </div>
+                <!--  <div>
+                  <ShadPopover>
+                    <ShadPopoverTrigger>
+                      <ShadButton
+                        type="button"
+                        class="bg-white hover:bg-white text-gray-600 border font-normal flex items-center"
+                      >
+                        Title, Social Link, etc.
+                        <IconChevronDown class="ms-1" :size="18" />
+                      </ShadButton>
+                    </ShadPopoverTrigger>
+                    <ShadPopoverContent
+                      :align="'start'"
+                      class="w-fit"
+                      :onRequestClose="closePopover"
+                    >
                       <div>
                         <div>
                           <FieldArray
@@ -558,9 +810,9 @@ const handleImageChange = (event: Event) => {
                             </div>
                           </FieldArray>
                         </div>
-                        <!-- <h5 class="text-sm font-medium text-gray-700">
-                                Create your own fields 
-                              </h5> -->
+                        <h5 class="text-sm font-medium text-gray-700">
+                          Create your own fields
+                        </h5>
                         <FieldArray
                           name="space_setting.space_collections"
                           v-slot="{ fields, push, remove }"
@@ -574,8 +826,8 @@ const handleImageChange = (event: Event) => {
                                 v-if="fieldid > 2"
                                 class="flex justify-between items-center mb-4"
                               >
-                                <div class="flex w-full">
-                                  <div class="relative w-full">
+                                <div class="flex">
+                                  <div class="relative">
                                     <ShadFormField
                                       v-slot="{ componentField }"
                                       :id="`collectionlabels_${fieldid}`"
@@ -598,7 +850,7 @@ const handleImageChange = (event: Event) => {
                                       0/50
                                     </p>
                                   </div>
-                                  <div class="w-48">
+                                  <div class="w-28">
                                     <ShadFormField
                                       v-slot="{ componentField }"
                                       :id="`field_type_${fieldid}`"
@@ -679,24 +931,20 @@ const handleImageChange = (event: Event) => {
                                 label: '',
                                 field_type: 'Text',
                                 is_required: false,
-                                is_enabled: true,
+                                is_enable: true,
                               })
                             "
                           >
-                            <IconCirclePlus
-                              class="text-gray-500 inline-block"
-                              :size="20"
-                            />
-                            <span class="text-sm text-gray-600 ms-1"
-                              >Add a new field (up to 5)</span
-                            >
+                            <IconCirclePlus class="text-gray-700" :size="18" />
+                            <h5 class="text-sm font-medium ms-1 text-gray-700">
+                              Add a new field (up to 5)
+                            </h5>
                           </div>
                         </FieldArray>
                       </div>
-                    </ShadCardContent>
-                  </ShadCard>
-                </div>
-               
+                    </ShadPopoverContent>
+                  </ShadPopover>
+                </div> -->
               </div>
               <div class="grid grid-cols-3 gap-x-5">
                 <div>

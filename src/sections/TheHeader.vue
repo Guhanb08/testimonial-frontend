@@ -170,9 +170,9 @@ const logout = () => {
       </nav>
 
       <div class="hidden lg:block" v-if="!loggedIn">
-        <router-link to="signin" class="px-2 py-4">Sign in</router-link>
+        <router-link to="/signin" class="px-2 py-4">Sign in</router-link>
 
-        <router-link to="signup" class="ms-3 px-5 py-3 bg-violet-600 text-white"
+        <router-link to="/signup" class="ms-3 px-5 py-3 bg-violet-600 text-white"
           >Sign up</router-link
         >
       </div>
@@ -195,7 +195,7 @@ const logout = () => {
           <ShadDropdownMenuLabel class=" ">My Account</ShadDropdownMenuLabel>
           <ShadDropdownMenuSeparator />
           <ShadDropdownMenuGroup>
-           <router-link to="dashboard">
+           <router-link to="/dashboard">
             <ShadDropdownMenuItem class="cursor-pointer">
               <IconLayoutDashboard class="mr-2 h-4 w-4" />
               <span>Dashboard</span>

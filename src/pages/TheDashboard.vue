@@ -73,7 +73,7 @@ const fetchSpaces = async () => {
       <div class="my-20">
         <div class="mb-6 flex justify-between">
           <h3 class="text-3xl font-semibold">Spaces</h3>
-          <router-link to="space">
+          <router-link to="/space">
             <button
               class="flex items-center bg-violet-500 hover:bg-violet-600 text-white px-4 py-2"
             >
@@ -87,7 +87,7 @@ const fetchSpaces = async () => {
           v-if="spaces?.length"
         >
           <div v-for="space in spaces">
-            <router-link :to="'products/' + space?.space_setting[0]?.url">
+            <router-link :to="'/products/' + space?.space_setting[0]?.url">
               <div class="flex items-center border rounded-xl shadow-sm pe-5">
                 <div class="border-r-2 border-gray-100">
                   <img

@@ -2,11 +2,12 @@
 import { ref, onMounted } from "vue";
 import toastService from "@/plugins/toast";
 import { useRoute, useRouter, RouterView } from "vue-router";
+
 import type { space } from "@/models/types";
 import { useSpaceStore } from "@/stores/spaceStore";
 import { useReviewStore } from "@/stores/reviewStore";
 
-import { useForm } from "vee-validate";
+import { useForm, Field, Form, ErrorMessage, FieldArray } from "vee-validate";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useFileStore } from "@/stores/fileStore";
@@ -40,6 +41,15 @@ const formSchema = toTypedSchema(
       reviewer_image: z.string().optional(),
       review_type: z.string().optional(),
       is_agree: z.boolean().optional(),
+      review_collections: z.array(
+        z.object({
+          label: z.string().optional(),
+          field_type: z.string().optional(),
+          text_value: z.string().optional(),
+          checkbox_value: z.boolean().optional(),
+          is_required: z.boolean().optional(),
+        })
+      ),
     }),
   })
 );
@@ -59,9 +69,24 @@ const {
     space_name: spaceValue?.value?.space_name,
     space_id: spaceValue?.value?.id,
     review_info: {
-      video:'dummy',
       rating: 5,
-      review_type :'Text'
+      review_type: "Text",
+      /*    review_collections: [
+        {
+          label: "Name",
+          field_type: "Text",
+          text_value: "",
+          checkbox_value: false,
+          is_required: true,
+        },
+        {
+          label: "Email",
+          field_type: "Text",
+          text_value: "",
+          checkbox_value: false,
+          is_required: true,
+        },
+      ], */
     },
   },
 });
@@ -71,9 +96,36 @@ const fetchSpaces = async () => {
     let response = await spaceStore.fetchSpaceBySlug(slug.value);
     if (response) {
       spaceValue.value = response.data;
+      let spaceCollection = response.data.space_setting[0]?.space_collections;
+      let reviewCollections = [
+      {
+        label: "Name",
+        field_type: "Text",
+        text_value: "",
+        checkbox_value: false,
+        is_required: true,
+      },
+      {
+        label: "Email",
+        field_type: "Text",
+        text_value: "",
+        checkbox_value: false,
+        is_required: true,
+      },
+      ...spaceCollection.map((collection: any) => ({
+        label: collection.label,
+        field_type: collection.field_type,
+        text_value: "",
+        checkbox_value: false,
+        is_required: collection.is_required,
+      })),
+    ];
       setValues({
         space_name: spaceValue?.value?.space_name,
         space_id: spaceValue?.value?.id,
+        review_info: {
+          review_collections: reviewCollections,
+        },
       });
     }
   } catch (error: any) {
@@ -110,8 +162,8 @@ const onSubmit = handleSubmit(async (values) => {
     let reviewPayload = { ...values };
     reviewPayload.review_info.image = imageName;
     reviewPayload.review_info.reviewer_image = avatarName;
-    console.log(reviewPayload)
-     let response = await reviewStore.createReview(reviewPayload);
+    console.log(reviewPayload);
+    let response = await reviewStore.createReview(reviewPayload);
     if (response) {
       toastService.default(`🎉 ${response.message}`);
       router.push("/dashboard");
@@ -162,6 +214,7 @@ const removeImage = (type: string) => {
       <div class="flex flex-col justify-center items-center">
         <div>
           <img
+            v-if="spaceValue?.space_setting[0]?.logo"
             class="w-[100px] rounded-full"
             :src="
               'https://testimoniallogos.s3.us-east-005.backblazeb2.com/' +
@@ -237,7 +290,7 @@ const removeImage = (type: string) => {
               <div>
                 <div class="">
                   <img
-                    class="h-15 rounded-md shadow-md"
+                    class="h-20 rounded-md shadow-md"
                     :src="
                       'https://testimoniallogos.s3.us-east-005.backblazeb2.com/' +
                       spaceValue?.space_setting[0]?.logo
@@ -323,7 +376,7 @@ const removeImage = (type: string) => {
                           type="file"
                           accept="image/*"
                           class="hidden"
-                          @change="handleImageChange($event , 'image')"
+                          @change="handleImageChange($event, 'image')"
                         />
                       </label>
                       <div
@@ -337,6 +390,86 @@ const removeImage = (type: string) => {
                         />
                       </div>
                     </div>
+                  </div>
+<!-- 
+                   <div>
+                    {{ reviewValue.review_info?.review_collections }}
+                  </div> -->
+
+                  <div>
+                    <FieldArray
+                      name="review_info.review_collections"
+                      v-slot="{ fields, push, remove }"
+                    >
+                      <div class="mt-3">
+                        <div v-for="(field, fieldid) in fields" :key="fieldid">
+                          <div
+                            class="relative w-full mb-4"
+                            v-if="
+                              reviewValue?.review_info?.review_collections?.[
+                                fieldid
+                              ].field_type == 'Text'
+                            "
+                          >
+                            <ShadFormField
+                              v-slot="{ componentField }"
+                              :id="`collectionlabels_${fieldid}`"
+                              :name="`review_info.review_collections[${fieldid}].text_value`"
+                            >
+                              <ShadFormItem v-auto-animate>
+                                <ShadFormLabel class="form-label">
+                                  {{
+                                    reviewValue?.review_info
+                                      ?.review_collections?.[fieldid].label
+                                  }}
+
+                                  <span
+                                    v-if="
+                                      reviewValue?.review_info
+                                        ?.review_collections?.[fieldid]
+                                        .is_required
+                                    "
+                                    class="text-red-600"
+                                    >*</span
+                                  ></ShadFormLabel
+                                >
+                                <ShadFormControl>
+                                  <ShadInput
+                                    class="input"
+                                    autocomplete="off"
+                                    type="text"
+                                    :required="reviewValue?.review_info?.review_collections?.[fieldid].is_required"
+                                    v-bind="componentField"
+                                  />
+                                </ShadFormControl>
+                              </ShadFormItem>
+                            </ShadFormField>
+                          </div>
+                          <div class="mb-4" v-else>
+                            <ShadFormField
+                              v-slot="{ value, handleChange }"
+                              :id="`collectioncheckbox_${fieldid}`"
+                              :name="`review_info.review_collections[${fieldid}].checkbox_value`"
+                            >
+                              <ShadFormItem class="flex items-center">
+                                <ShadFormControl class="mt0">
+                                  <ShadCheckbox
+                                    :checked="value"
+                                    @update:checked="handleChange"
+                                  />
+                                </ShadFormControl>
+                                <ShadFormLabel class="form-label mt0 ms-3">
+                                  {{
+                                    reviewValue?.review_info
+                                      ?.review_collections?.[fieldid].label
+                                  }}
+                                </ShadFormLabel>
+                              </ShadFormItem>
+                            </ShadFormField>
+                          </div>
+                        </div>
+                      </div>
+                    </FieldArray>
                   </div>
 
                   <div>
@@ -357,7 +490,7 @@ const removeImage = (type: string) => {
                           type="file"
                           accept="image/*"
                           class="hidden"
-                          @change="handleImageChange($event , 'avatar')"
+                          @change="handleImageChange($event, 'avatar')"
                         />
                       </label>
                       <div
