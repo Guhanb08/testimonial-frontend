@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref , watch} from "vue";
 import { useRoute, useRouter, RouterView } from "vue-router";
 import {
   Popover,
@@ -11,10 +11,16 @@ import { IconSettings } from "@tabler/icons-vue";
 const router = useRouter();
 const loggedIn = ref(false);
 const userData = ref();
+const route = useRoute();
 
 onMounted(() => {
   checkLoggedIn();
 });
+
+watch(route, (to, from) => {
+  checkLoggedIn()
+});
+
 
 const checkLoggedIn = () => {
   userData.value = JSON.parse(localStorage.getItem("userData") as string);

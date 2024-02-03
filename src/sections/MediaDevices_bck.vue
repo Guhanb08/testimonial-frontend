@@ -283,6 +283,9 @@ const recordVideo = ()=>{
     </p>
   </div>
   <div v-if="!recordingEnabled">
+    <ShadButton v-if="camEnabled" @click="recordVideo" type="button" class="w-full">
+      Record My video
+    </ShadButton>
     <ShadButton
       v-if="!camEnabled && isLoading"
       type="button"

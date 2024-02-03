@@ -22,7 +22,21 @@ export const useReviewStore = defineStore("reviewStore", () => {
       }
     }
   };
+
+  const fetchReviewBySpaceId = async (id:number) => {
+    try {
+      const response = await $axios.get(
+        `/reviews/master/space/${id}`,
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(error)
+    }
+  };
+
+
   return {
-    createReview
+    createReview,
+    fetchReviewBySpaceId
   };
 });

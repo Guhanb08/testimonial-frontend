@@ -101,7 +101,14 @@ import {
   IconLogout,
   IconDashboard,
   IconLayoutDashboard,
-  IconArrowDown
+  IconArrowDown,
+  IconPlayerRecordFilled,
+  IconPlayerStopFilled,
+  IconLoader2,
+  IconRefresh,
+  IconMessage2,
+  IconPointFilled,
+  IconTag
 } from "@tabler/icons-vue";
 import {
   Collapsible,
@@ -124,6 +131,19 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+
+
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+
+
 
 import StarRating from 'vue-star-rating'
 
@@ -209,6 +229,17 @@ app.component("ShadCollapsibleTrigger", CollapsibleTrigger);
 
 
 
+
+app.component("ShadTable", Table);
+app.component("ShadTableBody", TableBody);
+app.component("ShadTableCaption", TableCaption);
+app.component("ShadTableCell", TableCell);
+app.component("ShadTableHead", TableHead);
+app.component("ShadTableHeader", TableHeader);
+app.component("ShadTableRow", TableRow);
+
+
+
 // icons
 
 app.component("IconInfoCircle", IconInfoCircle);
@@ -239,6 +270,18 @@ app.component("IconLogout", IconLogout);
 app.component("IconLayoutDashboard",IconLayoutDashboard);
 app.component("IconDashboard", IconDashboard);
 app.component("IconArrowDown", IconArrowDown);
+app.component("IconPlayerRecordFilled", IconPlayerRecordFilled);
+app.component("IconPlayerStopFilled", IconPlayerStopFilled);
+
+app.component("IconLoader2", IconLoader2);
+app.component("IconRefresh", IconRefresh);
+
+app.component("IconMessage2", IconMessage2);
+app.component("IconPointFilled", IconPointFilled);
+app.component("IconTag", IconTag);
+
+
+
 
 
 

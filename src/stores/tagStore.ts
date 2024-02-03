@@ -2,13 +2,14 @@ import { defineStore } from "pinia";
 import { inject } from "vue";
 import toastService from "@/plugins/toast";
 
-export const useFileStore = defineStore("fileStore", () => {
+export const useTagStore = defineStore("tagStore", () => {
   const $axios: any = inject("$axios");
-  const uploadFile = async (formData : any) => {
+
+  const createTag = async (tagPayload : any) => {
     try {
       const response = await $axios.post(
-        "/common/file/upload",
-        formData
+        "/reviews/tags",
+        tagPayload
       );
       return response.data;
     } catch (error: any) {
@@ -22,27 +23,20 @@ export const useFileStore = defineStore("fileStore", () => {
     }
   };
 
-  const uploadVideo = async (formData : any) => {
+  const fetchTagByUserId = async () => {
     try {
-      const response = await $axios.post(
-        "/common/video/upload",
-        formData
+      const response = await $axios.get(
+        `/reviews/tags/user/tags`,
       );
       return response.data;
     } catch (error: any) {
-      if (error.response.data.errors) {
-        let errorMessage = `😕 ${error.response.data.errors[0].message}`;
-        toastService.default(errorMessage);
-      } else {
-        let errorMessage = `😕 ${error.response.data.message}`;
-        toastService.default(errorMessage);
-      }
+      console.log(error)
     }
   };
 
-  
+
   return {
-    uploadFile,
-    uploadVideo
+    createTag,
+    fetchTagByUserId
   };
 });

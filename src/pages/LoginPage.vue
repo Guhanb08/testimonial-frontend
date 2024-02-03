@@ -12,9 +12,10 @@ import { loginSchema } from "@/schemas/authSchema";
 
 const onSubmit = async (values: any) => {
   try {
-    const validatedValues = loginSchema.parse(values);
-    console.log(validatedValues);
-    let response = await authStore.loginUser(validatedValues);
+    console.log('values' , values);
+    /* const validatedValues = loginSchema.parse(values);
+    console.log(validatedValues); */
+    let response = await authStore.loginUser(values);
     if (response) {
       localStorage.setItem("userData", JSON.stringify(response.userData));
       localStorage.setItem("accessToken", JSON.stringify(response.accessToken));
@@ -81,13 +82,13 @@ const onSubmit = async (values: any) => {
                   class="block w-full rounded-md border-0 p-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-1 focus:ring-inset focus:ring-violet-600 sm:text-sm"
                 />
               </div>
-              <div class="text-sm mt-5">
+             <!--  <div class="text-sm mt-5">
                 <router-link
                   to="#"
                   class="text-violet-600 hover:text-violet-600"
                   >Forgot password?
                 </router-link>
-              </div>
+              </div> -->
             </div>
 
             <div>
@@ -102,11 +103,10 @@ const onSubmit = async (values: any) => {
 
           <p class="mt-10 text-center text-sm text-gray-500">
             Don't have an account?
-            <a
-              href="#"
+            <router-link
+              to="signup"
               class="font-semibold leading-6 text-violet-600 hover:text-violet-500"
-              >Sign Up</a
-            >
+              >Sign Up</router-link>
           </p>
         </div>
       </div>

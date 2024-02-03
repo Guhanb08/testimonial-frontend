@@ -12,14 +12,14 @@ import { registerSchema } from "@/schemas/authSchema";
 
 const onSubmit = async (values: any) => {
   try {
-    const validatedValues = registerSchema.parse(values);
-    console.log(validatedValues);
-    let response = await authStore.registerUser(validatedValues);
+    /* const validatedValues = registerSchema.parse(values);
+    console.log(validatedValues); */
+    let response = await authStore.registerUser(values);
     if (response) {
       toastService.default(`🎉 ${response.message}`);
       setTimeout(() => {
         router.push({ name: "signin" });
-      }, 3000);
+      }, 1000);
     }
   } catch (error: any) {
     if (error instanceof ZodError) {
@@ -29,6 +29,9 @@ const onSubmit = async (values: any) => {
     }
   }
 };
+
+
+
 </script>
 
 <template>
@@ -139,11 +142,10 @@ const onSubmit = async (values: any) => {
 
           <p class="mt-10 text-center text-sm text-gray-500">
             Already have an account?
-            <a
-              href="#"
+            <router-link
+              to="signin"
               class="font-semibold leading-6 text-violet-600 hover:text-violet-500"
-              >Sign In</a
-            >
+              >Sign In</router-link>
           </p>
         </div>
       </div>
